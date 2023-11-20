@@ -10,8 +10,8 @@ class App(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.pack(expand=True, fill=tk.BOTH)
-        self.master.title('color picker')
-        self.master.geometry('680x680+100+100')
+        self.master.title('color cropper')
+        self.master.geometry('680x680+680+96')
 
         self.screenshot = None
         self.image_id = 0
