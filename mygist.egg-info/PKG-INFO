@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: mygist
+Version: 0.0.1
+Summary: test
+Author: aki
+Author-email: aki666@gmail.com
+License: MIT License
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"

@@ -30,7 +30,6 @@ class Superhero(tk.Frame):
         dark = '#20374c'
         bodyfont = ('Arial', 8, 'bold')
         style.configure('c.TFrame', background=bg)
-        style.configure('p.TFrame', background=primary)
         style.configure('c.TLabel', background=bg, foreground=fg)
         style.configure('c.TCheckbutton', background=bg, foreground=fg)
         style.configure('p.TButton', borderwidth=0, background=primary, foreground=fg)
@@ -38,17 +37,16 @@ class Superhero(tk.Frame):
         style.configure('g.TButton', borderwidth=0, background=success, foreground=fg)
         style.configure('b.TButton', borderwidth=0, background=info, foreground=fg)
         style.configure('y.TButton', borderwidth=0, background=warning, foreground=fg)
+        style.configure('d.TButton', borderwidth=0, background=danger, foreground=fg)
         style.configure('c.TSeparator', background=bg)
-        t_font = 'Arial', 14
         style.configure('Treeview.Heading', background=secondary, foreground=fg)
         style.configure('Treeview', background=dark, foreground=fg)
-
 
 class App(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
-        # self.master.protocol('WM_DELETE_WINDOW', self._destroyWindow)
+        self.master.protocol('WM_DELETE_WINDOW', self._destroyWindow)
         self.master.title('super hello theme')
         self.master.geometry('+30+30')
         self.master.resizable(width=False, height=False)
@@ -57,6 +55,8 @@ class App(tk.Frame):
         self.frame.pack(expand=True, fill=tk.BOTH)
 
         self.heading()
+        separator = ttk.Separator(self.frame, orient='horizontal', style='c.TSeparator')
+        separator.pack(fill=tk.BOTH, padx=16)
         self.buttons()
         self.tree()
         self.plot()
@@ -74,6 +74,7 @@ class App(tk.Frame):
     def buttons(self):
         frame2 = ttk.Frame(self.frame, style='c.TFrame')
         frame2.pack(expand=True, fill=tk.BOTH, padx=16)
+        ttk.Frame(frame2, height=16, style='c.TFrame').pack()
         btn = ttk.Button(frame2, text='Primary', style='p.TButton')
         btn.pack(side=tk.LEFT, anchor=tk.N, padx=2, pady=8)
         btn = ttk.Button(frame2, text='Secondary', style='s.TButton')
@@ -84,25 +85,29 @@ class App(tk.Frame):
         btn.pack(side=tk.LEFT, anchor=tk.N, padx=2, pady=8)
         btn = ttk.Button(frame2, text='Warning', style='y.TButton')
         btn.pack(side=tk.LEFT, anchor=tk.N, padx=2, pady=8)
+        btn = ttk.Button(frame2, text='danger', style='d.TButton')
+        btn.pack(side=tk.LEFT, anchor=tk.N, padx=2, pady=8)
 
     def tree(self):
         frame3 = ttk.Frame(self.frame, style='c.TFrame')
         frame3.pack(expand=True, fill=tk.BOTH, padx=16, pady=16)
-        label = ttk.Label(frame3, text='Iris data', style='c.TLabel', font=('Arial', 16))
+        label = ttk.Label(frame3, text='Table', style='c.TLabel', font=('Arial', 16))
         label.pack(anchor=tk.W, pady=8)
 
         df_ = pd.read_csv('iris.csv')
-        df = df_.drop(columns=['class']).iloc[:3, :]
+        # df = df_.drop(columns=['class']).iloc[:3, :]
+        df = df_.iloc[:3, :]
         tree = ttk.Treeview(frame3, height=len(df))
         tree["column"] = list(range(len(df.columns)))
         tree["show"] = "headings"
         cols = []
         for col in df.columns:
-            cols.append((col, 128))
+            cols.append((col, 98))
 
         for i, (name, width) in enumerate(cols):
             tree.heading(i, text=name)
-            tree.column(i, width=width, anchor=tk.E)
+            anchor = tk.E if i < 4 else tk.CENTER
+            tree.column(i, width=width, anchor=anchor)
 
         for i in df.index:
             values = [df[col][i] for col in df.columns]
@@ -133,22 +138,27 @@ class App(tk.Frame):
         target = iris['class']
 
         fig, ax = plt.subplots(figsize=(5, 4))
-        fig.set_facecolor(secondary)
+        fig.set_facecolor(dark)
         ax.set_facecolor(secondary)
-        ax.scatter(sepal_length[target=='Iris-setosa'], sepal_width[target=='Iris-setosa'], label='Setosa', color=info, marker='o')
+        ax.scatter(sepal_length[target=='Iris-setosa'], sepal_width[target=='Iris-setosa'], label='Setosa', color=primary, marker='o')
         ax.scatter(sepal_length[target=='Iris-versicolor'], sepal_width[target=='Iris-versicolor'], label='Versicolor', color=success, marker='x')
-        ax.scatter(sepal_length[target=='Iris-virginica'], sepal_width[target=='Iris-virginica'], label='Virginica', color=warning, marker='^')
+        ax.scatter(sepal_length[target=='Iris-virginica'], sepal_width[target=='Iris-virginica'], label='Virginica', color=danger, marker='^')
 
+        ax.set_title('Sepal Length vs Sepal Width', color=fg)
         ax.set_xlabel('Sepal Length', color=fg)
         ax.set_ylabel('Sepal Width', color=fg)
-        ax.set_title('Sepal Length vs Sepal Width', color=fg)
-        # plt.legend()
-
+        plt.gca().tick_params(axis='x', colors=fg)
+        plt.gca().tick_params(axis='y', colors=fg)
+        plt.legend(facecolor=secondary)
         canvas = FigureCanvasTkAgg(fig, master=frame4)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill=tk.BOTH, padx=16, pady=8)
 
         ttk.Frame(frame4, height=8, style='c.TFrame').pack()
+
+    def _destroyWindow(self):
+        self.master.quit()
+        self.master.destroy()
 
 if __name__ == '__main__':
     root = tk.Tk()

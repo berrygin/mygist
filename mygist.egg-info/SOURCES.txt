@@ -1,0 +1,8 @@
+README.md
+setup.cfg
+setup.py
+mygist.egg-info/PKG-INFO
+mygist.egg-info/SOURCES.txt
+mygist.egg-info/dependency_links.txt
+mygist.egg-info/requires.txt
+mygist.egg-info/top_level.txt

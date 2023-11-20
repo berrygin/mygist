@@ -1,0 +1,7 @@
+matplotlib
+pandas
+
+[dev]
+pytest
+flake8
+mypy
