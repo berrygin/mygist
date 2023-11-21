@@ -28,7 +28,10 @@ class Superhero(tk.Frame):
         danger = '#d9534f'
         light = '#abb6c2'
         dark = '#20374c'
-        bodyfont = ('Arial', 8, 'bold')
+        h1_font = 'Arial', 32
+        h2_font = 'Arial', 24
+        h3_font = 'Arial', 16
+        body_font = 'Arial', 8
         style.configure('c.TFrame', background=bg)
         style.configure('c.TLabel', background=bg, foreground=fg)
         style.configure('c.TCheckbutton', background=bg, foreground=fg)
@@ -65,6 +68,7 @@ class App(tk.Frame):
         frame1 = ttk.Frame(self.frame, style='c.TFrame')
         frame1.pack(expand=True, fill=tk.X, anchor=tk.N, padx=16, pady=16)
         h1_font = 'Arial', 32
+        h2_font = 'Arial', 24
         h3_font = 'Arial', 16
         label = ttk.Label(frame1, text='Superhero', style='c.TLabel', font=h1_font)
         label.pack(anchor=tk.W)
