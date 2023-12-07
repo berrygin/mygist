@@ -29,7 +29,7 @@ class App(tk.Frame):
         button_crop = tk.Button(frame1, text='crop', width=4, command=self.crop())
         button_crop.pack(side=tk.LEFT, padx=4)
 
-        label = tk.Label(frame1, textvariable=self.var)
+        label = tk.Label(frame1, textvariable=self.var, fg='#000')
         label.pack(side=tk.LEFT, padx=8)
 
         separator = ttk.Separator(frame, orient='horizontal')

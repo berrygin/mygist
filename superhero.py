@@ -154,6 +154,7 @@ class App(tk.Frame):
         plt.gca().tick_params(axis='x', colors=fg)
         plt.gca().tick_params(axis='y', colors=fg)
         plt.legend(facecolor=secondary)
+        
         canvas = FigureCanvasTkAgg(fig, master=frame4)
         canvas.draw()
         canvas.get_tk_widget().pack(expand=True, fill=tk.BOTH, padx=16, pady=8)
